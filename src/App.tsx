@@ -113,8 +113,9 @@ export default function App() {
     const unsubscribe = subscribeSessionEvents(
       sessionCode,
       (updatedState: SessionPublicState) => {
+        setError(null);
         setSession((prev) => {
-          if (!prev) return null;
+          if (!prev) return updatedState;
           return {
             ...prev,
             ...updatedState,

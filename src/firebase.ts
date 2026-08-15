@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, Firestore } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
 // Initialize Firebase App
@@ -9,10 +9,15 @@ export const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfi
 // Initialize Firebase Auth
 export const auth = getAuth(app);
 
-// Initialize Firestore with the provisioned custom database ID
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId || undefined);
+// Primary Firestore instance (configured database ID or default)
+export const db: Firestore = firebaseConfig.firestoreDatabaseId
+  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+  : getFirestore(app);
 
-// Ensure anonymous authentication for multi-device sync
+// Secondary fallback Firestore instance (default database)
+export const fallbackDb: Firestore = getFirestore(app);
+
+// Non-blocking anonymous auth for multi-device sync
 let authInitPromise: Promise<string> | null = null;
 export async function ensureAuth(): Promise<string> {
   if (auth.currentUser) {
@@ -21,18 +26,21 @@ export async function ensureAuth(): Promise<string> {
   if (!authInitPromise) {
     authInitPromise = (async () => {
       try {
-        const cred = await signInAnonymously(auth);
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Auth timeout')), 1500)
+        );
+        const cred = await Promise.race([signInAnonymously(auth), timeoutPromise]);
         return cred.user.uid;
       } catch (err) {
-        console.warn('Anonymous auth note (proceeding in guest mode):', err);
-        return 'anon_' + Math.random().toString(36).substring(2, 9);
+        // Fallback to guest mode
+        return 'anon_' + Math.random().toString(36).substring(2, 11);
       }
     })();
   }
   return authInitPromise;
 }
 
-// Auto-trigger auth on load
+// Trigger background auth initialization on load
 if (typeof window !== 'undefined') {
-  ensureAuth().catch(console.error);
+  ensureAuth().catch(() => {});
 }
