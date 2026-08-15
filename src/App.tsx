@@ -105,12 +105,12 @@ export default function App() {
     }
   }, [sessionCode, loadSession]);
 
-  // Setup Real-time SSE Stream + 2s Polling fallback
+  // Setup Real-time Firestore Live Subscription
   useEffect(() => {
-    if (!sessionCode || !session) return;
+    if (!sessionCode) return;
 
-    // SSE connection
-    const unsubscribeSSE = subscribeSessionEvents(
+    // Direct Firestore real-time listener (updates instantaneously across all devices & Netlify)
+    const unsubscribe = subscribeSessionEvents(
       sessionCode,
       (updatedState: SessionPublicState) => {
         setSession((prev) => {
@@ -118,24 +118,21 @@ export default function App() {
           return {
             ...prev,
             ...updatedState,
+            // Preserve local participant vote status and lecturer rights
+            myVotes: prev.myVotes,
+            isLecturer: prev.isLecturer,
           };
         });
       },
-      () => {
-        // SSE error fallback, silent
+      (err) => {
+        console.warn('Live subscription notice:', err);
       }
     );
 
-    // Periodic fallback poller
-    const interval = setInterval(() => {
-      loadSession(sessionCode, true);
-    }, 2500);
-
     return () => {
-      unsubscribeSSE();
-      clearInterval(interval);
+      unsubscribe();
     };
-  }, [sessionCode, session?.code, loadSession]);
+  }, [sessionCode]);
 
   const handleJoinSession = (code: string) => {
     loadSession(code);

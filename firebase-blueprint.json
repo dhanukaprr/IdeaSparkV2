@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "sessions": {
+      "title": "Classroom Session",
+      "description": "Live interactive crowdsourcing session for student pitch ideas and voting",
+      "fields": {
+        "code": { "type": "string", "description": "4-character session code (e.g., SPARK, 8K9P)" },
+        "title": { "type": "string", "description": "Session presentation title" },
+        "cohort": { "type": "string", "description": "Cohort or class name" },
+        "createdAt": { "type": "number", "description": "Unix timestamp in ms" },
+        "businesses": { "type": "array", "description": "List of presented business ventures" },
+        "ideas": { "type": "array", "description": "List of crowd-submitted ideas" },
+        "activeBusinessId": { "type": "string", "description": "Currently focused business on projector" },
+        "lecturerKey": { "type": "string", "description": "Lecturer authorization key" },
+        "participantVotes": { "type": "map", "description": "Map of participant vote allocations" },
+        "totalVotes": { "type": "number", "description": "Total votes cast" },
+        "totalParticipants": { "type": "number", "description": "Total unique participants" }
+      }
+    }
+  },
+  "firestore": {
+    "/sessions/{sessionCode}": {
+      "entity": "sessions",
+      "description": "Session document keyed by uppercase session code"
+    }
+  }
+}
