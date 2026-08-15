@@ -1,5 +1,5 @@
 {
-  "name": "IdeaSpark",
+  "name": "IdeaSparkV2",
   "description": "Creativity & Innovation Live Wall for classroom idea crowdsourcing and voting across businesses and products.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

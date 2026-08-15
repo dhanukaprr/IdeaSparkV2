@@ -35,7 +35,7 @@ export function JoinView({ onJoin, initialCode = '', isLoading = false, error = 
 
       <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-2">
         <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-          IDEASPARK
+          IDEASPARK V2
         </span>
       </h1>
       <p className="text-xs text-slate-600 font-medium max-w-xs mx-auto mb-6">

@@ -181,7 +181,7 @@ export default function App() {
                 <Sparkles className="w-4 h-4" />
               </div>
               <span className="font-black text-xl sm:text-2xl tracking-tighter bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                IDEASPARK
+                IDEASPARK V2
               </span>
             </div>
             <div className="h-6 w-[1px] bg-slate-200 hidden sm:block"></div>
@@ -277,7 +277,7 @@ export default function App() {
                 <Sparkles className="w-4 h-4" />
               </div>
               <span className="font-black text-xl sm:text-2xl tracking-tighter bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                IDEASPARK
+                IDEASPARK V2
               </span>
             </div>
 
