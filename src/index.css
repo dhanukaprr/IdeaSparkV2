@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .bg-colorful-mesh {
+    background-color: #F8FAFC;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.10) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(245, 158, 11, 0.08) 0px, transparent 50%);
+  }
+
+  .bg-colorful-mesh-dark {
+    background-color: #0B0F19;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.22) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.18) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.20) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.22) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(245, 158, 11, 0.14) 0px, transparent 50%);
+  }
+
+  .bg-dot-grid-colorful {
+    background-image: radial-gradient(rgba(59, 130, 246, 0.18) 1.2px, transparent 0);
+    background-size: 20px 20px;
+  }
+
+  .bg-dot-grid-dark {
+    background-image: radial-gradient(rgba(147, 197, 253, 0.18) 1.2px, transparent 0);
+    background-size: 24px 24px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.18s ease-out forwards;
+}
+
